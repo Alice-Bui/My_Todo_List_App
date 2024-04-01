@@ -3,13 +3,12 @@ import Title from '../components/Title';
 import NoteList from '../components/NoteList';
 import AddButton from '../components/addButton';
 
-export default function Home({navigation}) {
-  const addNewTodoPage = ()=>navigation.navigate('Add New Todo');
+export default function AddNewTodo() {
   return (
     <View style={styles.container}>
       <Title text="My ToDo List"/>
       <NoteList/>
-      <AddButton text="ADD NEW TODO" name="pencil-plus" navigation={addNewTodoPage} />
+      <AddButton text="ADD NEW TODO" name="pencil-plus"/>
     </View>
   );
 }
@@ -17,7 +16,7 @@ export default function Home({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#DCEBDE',
+    backgroundColor: 'red',
     alignItems: 'center',
     paddingHorizontal: '2%',
     paddingVertical: '5%',
