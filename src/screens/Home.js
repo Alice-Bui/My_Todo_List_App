@@ -8,7 +8,7 @@ export default function App() {
     <View style={styles.container}>
       <Title text="My ToDo List"/>
       <NoteList/>
-      <AddButton text="ADD NEW TODO"/>
+      <AddButton text="ADD NEW TODO" name="pencil-plus"/>
     </View>
   );
 }
@@ -16,7 +16,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#B6C2A1',
+    backgroundColor: '#DCEBDE',
     alignItems: 'center',
     paddingHorizontal: '2%',
     paddingVertical: '5%',

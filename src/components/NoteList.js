@@ -4,16 +4,16 @@ export default NoteList = function(){
     <View style = {styles.main}>
         <View style = {styles.line}/>
         <View style = {styles.listContainer}>
-          <View style = {[styles.list, {backgroundColor: '#AFC9CC'}]}>
+          <View style = {[styles.list, {backgroundColor: '#9fbbd4'}]}>
             <Text style = {styles.note}>Buy milk</Text>
           </View>
-          <View style = {[styles.list, {backgroundColor: '#A68CB5'}]}>
+          <View style = {[styles.list, {backgroundColor: '#eef0ff'}]}>
             <Text style = {styles.note}>Buy bread</Text>
           </View>
-          <View style = {[styles.list, {backgroundColor: '#998981'}]}>
+          <View style = {[styles.list, {backgroundColor: '#e8f8f3'}]}>
             <Text style = {styles.note}>Do assignment</Text>
           </View>
-          <View style = {[styles.list, {backgroundColor: '#C2C2A2'}]}>
+          <View style = {[styles.list, {backgroundColor: '#fcf3dc'}]}>
             <Text style = {styles.note}>Go to work</Text>
           </View>
         </View>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '7%',
         borderRadius: 10,
-        borderColor: 'black',
+        borderColor: '#544c4a',
         borderWidth: 2,
         marginBottom: '3%',
         justifyContent: 'center'
