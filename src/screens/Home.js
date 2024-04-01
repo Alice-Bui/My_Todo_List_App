@@ -9,7 +9,9 @@ export default function Home({navigation}) {
     <View style={styles.container}>
       <Title text="My ToDo List"/>
       <NoteList/>
-      <AddButton text="ADD NEW TODO" name="pencil-plus" navigation={addNewTodoPage} />
+      <View style = {[{width: "100%"}, {height: "7%"}]}>
+        <AddButton text="ADD NEW TODO" name="pencil-plus" navigation={addNewTodoPage} />
+      </View>
     </View>
   );
 }
