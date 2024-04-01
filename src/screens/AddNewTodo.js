@@ -1,14 +1,22 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import Title from '../components/Title';
-import NoteList from '../components/NoteList';
 import AddButton from '../components/addButton';
+import NoteInput from '../components/noteInput';
 
-export default function AddNewTodo() {
+export default function AddNewTodo({navigation}) {
+    const homePage = ()=>navigation.navigate('Home');
   return (
     <View style={styles.container}>
-      <Title text="My ToDo List"/>
-      <NoteList/>
-      <AddButton text="ADD NEW TODO" name="pencil-plus"/>
+        <Title text="Add New Todo"/>
+        <NoteInput/>
+        <View style={[{flexDirection: 'row'}, {height: "7%"}]}>
+            <View style = {[{marginHorizontal: "5%"}, {width: "40%"}]}>
+                <AddButton text=" Cancel" name="tooltip-remove" navigation={homePage}/>
+            </View>
+            <View style = {[{marginHorizontal: "5%"}, {width: "40%"}]}>
+                <AddButton text="Save" name="content-save-check"/>
+            </View>
+        </View>
     </View>
   );
 }
@@ -16,10 +24,10 @@ export default function AddNewTodo() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: '#fcf3dc',
     alignItems: 'center',
     paddingHorizontal: '2%',
     paddingVertical: '5%',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   }
 });
