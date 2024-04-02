@@ -23,6 +23,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: '2%',
     paddingVertical: '5%',
-    justifyContent: 'space-between',
   }
 });

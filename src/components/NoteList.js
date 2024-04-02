@@ -2,7 +2,6 @@ import { StyleSheet, Text, View } from 'react-native';
 export default NoteList = function(){
   return (
     <View style = {styles.main}>
-        <View style = {styles.line}/>
         <View style = {styles.listContainer}>
           <View style = {[styles.list, {backgroundColor: '#9fbbd4'}]}>
             <Text style = {styles.note}>Buy milk</Text>
@@ -33,6 +32,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         width: '100%',
         height: 3,
+        margin: "3%"
     },
     listContainer: {
         width: "100%",

@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
 export default Title = function({text}){
   return (
-    <Text style={styles.title}>
+    <View style={[{width: "100%"}, {height: "10%"}, {alignItems: 'center'}]}>
+      <Text style={styles.title}>
         {text}
-    </Text>
+      </Text>
+      <View style={styles.line}/>
+    </View>
   );
 }
 
@@ -12,6 +15,12 @@ const styles = StyleSheet.create({
         fontFamily: 'monospace',
         fontSize: 36,
         fontWeight: 'bold',
-        color: 'black'
-    }
+        color: 'black',
+    },
+    line: {
+      backgroundColor: 'black',
+      width: '100%',
+      height: 3,
+      margin: "3%"
+  }
 });

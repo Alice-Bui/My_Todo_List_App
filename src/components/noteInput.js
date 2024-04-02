@@ -5,7 +5,6 @@ export default NoteInput = function(){
     const [description, setDescription] = useState('');
     return (
         <View style = {styles.main}>
-            <View style = {styles.line}/>
             <View style = {styles.listContainer}>
                 <Text style={styles.subtitle}>Title</Text>
                 <TextInput
@@ -34,12 +33,6 @@ const styles = StyleSheet.create({
         height: "60%",
         alignItems: 'center',
         justifyContent: 'flex-start', 
-    },
-    line: {
-        backgroundColor: 'black',
-        width: '100%',
-        height: 3,
-        marginBottom: "3%"
     },
     listContainer: {
         width: "95%",
