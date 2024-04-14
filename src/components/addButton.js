@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons"; 
-export default AddButton = function({text, name, f}){
+export default AddButton = function({text, name, f, color}){
   return (
-    <Pressable style={styles.Button} onPress={f}>
+    <Pressable style={[styles.Button, {backgroundColor: color}]} onPress={f}>
         <MaterialCommunityIcons name={name} color="white" size ={30} padding={10}/>
         <Text style = {styles.buttonName}>{text}</Text>
     </Pressable>
@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     buttonName: {
         color: 'white',
         fontSize: 24,
-        padding: 10
+        padding: 10,
+        fontFamily: 'monospace',
     }
 });

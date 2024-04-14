@@ -3,44 +3,33 @@ import { useState, useEffect } from 'react';
 import { MaterialCommunityIcons } from "@expo/vector-icons"; 
 import AddButton from '../addButton';
 export default NoteList = function({todos, displayTodos}){
-  //Visual for dynamic todolist
-  const bgColor = ['#9fbbd4', '#eef0ff', '#e8f8f3', '#fcf3dc'];
-  /*const showDescription = (index) => {
-    setDescription(preDes => {
-      const newDes = [...preDes];
-      newDes[index] = {
-        ...newDes[index],
-        visible: !newDes[index].visible,
-        icon: newDes[index].icon === 'menu-down'?'menu-up':'menu-down' 
-      };
-      return newDes;
-    });    
-  }*/
+  const noteColor = ['#A8C6E0', '#EEF0FF', '#E8F8F3', '#FCF3DC'];
 
   //Displaying each Todo task
   const Todo = ({todo,cmp,del,dis}) => {
     const {id, title, description, completed, showDescription, showIcon}=todo
     return (
       <View>
-        <View style={[styles.listTitle, {backgroundColor: bgColor[id%4]}]}>
-          <Text style = {styles.note}>{title}</Text>
-          <Pressable onPress={()=>dis(id)}>
+        <View style={[styles.list, {backgroundColor: noteColor[id%4]}]}>
+          <View style={styles.titleSection}>
+            <Text style = {styles.title}>{title}</Text>
+            <Pressable onPress={()=>dis(id)}>
             <MaterialCommunityIcons name={showIcon} color="black" size ={30}/>
-          </Pressable>
-        </View>
-        {showDescription==true && (<View style ={styles.listDescription}>
-            <Text style = {styles.note}>{description}</Text>
-            <View style={[{flexDirection: 'row'}, {justifyContent: 'space-around'}]}>
+            </Pressable>
+          </View>
+          {showDescription==true && (<View>
+            <Text style = {styles.description}>{description}</Text>
+            <View style={styles.buttonSection}>
               {!completed &&<Pressable onPress={()=>cmp(id)}>
-                  <MaterialCommunityIcons name='star-check' color="black" size ={30}/>
-                </Pressable>}
-
+                  <MaterialCommunityIcons name='star-check' color="#F0D160" size ={35}/>
+              </Pressable>}
               <Pressable onPress={()=>del(id)}>
-                <MaterialCommunityIcons name='delete-forever' color="black" size ={30}/>
+                <MaterialCommunityIcons name='delete-forever' color="#CF5751" size ={35}/>
               </Pressable>
             </View>
           </View>
         )}
+        </View>
       </View> 
   )}
 
@@ -72,22 +61,6 @@ export default NoteList = function({todos, displayTodos}){
       return newTodos;
   })}
 
-  /*<FlatList
-            data={todos}
-            renderItem={({item, index}) => (
-              <View key={index}>
-                <View style = {[styles.listTitle, {backgroundColor: bgColor[index%4]}]}>
-                  <Text style = {styles.note}>{item.title}</Text>
-                  <Pressable onPress={()=>showDescription(index)}><MaterialCommunityIcons name={description[index].icon} color="black" size ={30}/></Pressable>
-                </View>
-
-                {description[index].visible && (<View style ={styles.listDescription}>
-                  <Text style = {styles.note}>{item.description}</Text>
-                </View>)}
-              </View>
-            )}
-          />
-  */
   return (
     <View style = {styles.main}>
         <View style = {styles.listContainer}>
@@ -119,23 +92,34 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "95%",
     },
-    listTitle: {
-        padding: 8,
+    list: {
+        paddingVertical: 10,
+        paddingHorizontal: 16,
         margin: '2%',
         borderRadius: 10,
         borderColor: '#544c4a',
-        borderWidth: 2,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexDirection: 'row',
+        borderWidth: 2
     },
-    listDescription: {
-      backgroundColor: 'white',
-      padding: 8,
-      margin: '2%',
+    title: {
+      fontSize: 18,
+      color: 'black',
+      fontWeight: 'bold',
+      fontFamily: 'monospace'
     },
-    note: {
-        fontSize: 14,
-        color: 'black'
+    titleSection: {
+      flexDirection: 'row', 
+      justifyContent: 'space-between', 
+      alignItems: 'center'
+    },
+    description: {
+      fontSize: 14,
+      color: 'black',
+      fontFamily: 'monospace'
+    },
+    buttonSection: {
+      flexDirection: 'row', 
+      justifyContent: 'space-around', 
+      alignItems: 'center', 
+      paddingVertical: 5 
     }
 });

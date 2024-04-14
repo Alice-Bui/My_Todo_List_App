@@ -1,9 +1,7 @@
 import { StyleSheet, Text, View, Pressable, TextInput, FlatList, Button, ToastAndroid } from 'react-native';
 import { useState, useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import Title from '../components/Title';
 import AddButton from '../components/addButton';
-import NoteInput from '../components/addTodo_components/noteInput';
 
 export default function AddNewTodo({navigation, route}) { 
   //Define the data  
@@ -11,12 +9,13 @@ export default function AddNewTodo({navigation, route}) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  //Listen for changes to {todos} from Home page
-  /*useEffect(() => {
-    setTodos(route.params.todos);
-    console.log("Add New Todo params:");
-    console.log(route.params.todos);
-  }, [route.params?.todos])*/
+  const theme = [
+  {background: '#FCF0DC',input: '#A8C6E0',button: '#517591'},
+  {background: '#FFFBED', input: '#EEF0FF', button: '#656CA2'}, 
+  {background: '#F7ECE9',input: '#E8F8F3',button: '#79A092'},
+  {background: '#EAE8E8' ,input: '#FCF3DC',button: '#A0916C'}
+  ];
+  const [noteTheme, setTheme] = useState('');
 
   useEffect(() => {
     if (route.params?.todos) {
@@ -29,6 +28,8 @@ export default function AddNewTodo({navigation, route}) {
   useEffect(() => {
     console.log("Add New Todo Screen:")
     console.log(todosData)
+    setTheme(theme[(todosData.reduce((a,t)=>a<t.id?t.id:a, 0)+1)%4])
+    console.log(noteTheme)
     //navigation.setParams({todos: {todosData}})
   }, [todosData])
 
@@ -55,13 +56,13 @@ export default function AddNewTodo({navigation, route}) {
   const homePage = ()=>navigation.navigate({name: 'Home', params: {todos: todosData}, merge: true});
   
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: noteTheme.background}]}>
         <Title text="Add New Todo"/>
         <View style = {styles.main}>
             <View style = {styles.listContainer}>
                 <Text style={styles.subtitle}>Title</Text>
                 <TextInput
-                    style={[styles.input, {height: "10%"}]}
+                    style={[styles.input, {height: "10%"}, {backgroundColor: noteTheme.input}]}
                     value={title}
                     onChangeText={setTitle}
                     placeholder="Add a title"
@@ -70,19 +71,19 @@ export default function AddNewTodo({navigation, route}) {
                 <TextInput
                     multiline
                     numberOfLines={6}
-                    style={[styles.input, {textAlignVertical: "top"}]}
+                    style={[styles.input, {textAlignVertical: "top"}, {backgroundColor: noteTheme.input}]}
                     value={description}
                     onChangeText={setDescription}
                     placeholder="Add some details"
                 />
             </View>
         </View>
-        <View style={[{flexDirection: 'row'}, {height: "7%"}]}>
-            <View style = {[{marginHorizontal: "5%"}, {width: "40%"}]}>
-                <AddButton text=" Cancel" name="tooltip-remove" f={homePage}/>
+        <View style={styles.buttonSection}>
+            <View style = {styles.button}>
+                <AddButton text="Back" name="tooltip-remove" f={homePage} color={noteTheme.button}/>
             </View>
-            <View style = {[{marginHorizontal: "5%"}, {width: "40%"}]}>
-                <AddButton text="Save" name="content-save-check" f={addTodo}/>
+            <View style = {styles.button}>
+                <AddButton text="Save" name="content-save-check" f={addTodo} color={noteTheme.button}/>
             </View>
         </View>
     </View>
@@ -92,7 +93,6 @@ export default function AddNewTodo({navigation, route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fcf3dc',
     alignItems: 'center',
     paddingHorizontal: '2%',
     paddingVertical: '5%',
@@ -113,12 +113,21 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       padding: 10,
       marginBottom: '10%',
-      fontSize: 18
+      fontSize: 18,
+      fontFamily: 'monospace',
   },
   subtitle: {
       fontSize: 24,
       fontWeight: 'bold',
       fontFamily: 'monospace',
       margin: '2%'
+  },
+  buttonSection: {
+    flexDirection: 'row',
+    height: '7%'
+  },
+  button: {
+    marginHorizontal: '5%',
+    width: '40%'
   }
 });
