@@ -1,60 +1,59 @@
 import { StyleSheet, Text, View, Pressable, TextInput, FlatList, Button, ToastAndroid } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Title from '../components/Title';
 import AddButton from '../components/addButton';
 import NoteInput from '../components/addTodo_components/noteInput';
 
-export default function AddNewTodo({navigation, route}) {    
-    const [todos, setTodos] = useState([]);
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+export default function AddNewTodo({navigation, route}) { 
+  //Define the data  
+  const [todosData, setTodos] = useState([]);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
-    const homePage = ()=>navigation.navigate('Home', {name:'Peter', age: '29'});
+  //Listen for changes to {todos} from Home page
+  /*useEffect(() => {
+    setTodos(route.params.todos);
+    console.log("Add New Todo params:");
+    console.log(route.params.todos);
+  }, [route.params?.todos])*/
 
-    const addTodo = () => {
-      {/* input field is empty */}
-      if (title===''||description==='') return
-
-      {/*successful validation*/}
-      ToastAndroid.show('Todo Added Successfully.', ToastAndroid.SHORT)
-
-      {/*Creating id*/}
-      const maxid = todos.reduce((a,t)=>a<t.id?t.id:a, 0) 
-      setTodos(todos => [...todos,{id:maxid+1, title, description, completed:false}])
-      setTitle('')
-      setDescription('')
-      console.log(todos)
+  useEffect(() => {
+    if (route.params?.todos) {
+      setTodos(route.params.todos);
+      console.log("Home params:");
+      console.log(route.params.todos);
     }
+  }, [route.params?.todos])
 
-    const Todo = ({todo,cmp,del}) => {
-      const {id, title, description, completed}=todo
-      return (
-        <View style={{flexDirection: 'row', alignItems:'center', justifyContent:'space-around'}}>
-          <Text>({id})
-            <Text>{title}</Text>
-            <Text>{description}</Text>
-          </Text>
-          {!completed && <Button title='complete' onPress={()=>cmp(id)}/>}
-          <Button title = 'delete' onPress={()=>del(id)}/>
-        </View>
-      )
-    }
+  useEffect(() => {
+    console.log("Add New Todo Screen:")
+    console.log(todosData)
+    //navigation.setParams({todos: {todosData}})
+  }, [todosData])
 
-    const deleteTodo = (id) => {
-      setTodos(td => td.filter(t=>t.id!=id))
-    }
+  //When clicking the Save button
+  const addTodo = () => {
+    // If either of the input fields is empty => return nothing
+    if (title===''||description==='') return
 
-    const completeTodo = (id) => {
-      setTodos(ts=>{
-        const ntd = ts.map(t=>{
-          const nt = {...t}
-          if (t.id === id) nt.completed = true
-          return nt
-        })
-        return ntd
-      })
-    }
+    //successful validation
+    ToastAndroid.show('Todo Added Successfully.', ToastAndroid.SHORT)
+
+    //Creating id
+    const maxid = todosData.reduce((a,t)=>a<t.id?t.id:a, 0) 
+
+    //Updating the todosData
+    setTodos(todos => [...todos,{id:maxid+1, title, description, completed:false, showDescription: false, showIcon: 'menu-down'}])
+    
+    //Clear the input fields
+    setTitle('')
+    setDescription('')
+  }
+
+  // Navigate back to Home page and pass todosData
+  const homePage = ()=>navigation.navigate({name: 'Home', params: {todos: todosData}, merge: true});
+  
   return (
     <View style={styles.container}>
         <Title text="Add New Todo"/>
@@ -80,18 +79,12 @@ export default function AddNewTodo({navigation, route}) {
         </View>
         <View style={[{flexDirection: 'row'}, {height: "7%"}]}>
             <View style = {[{marginHorizontal: "5%"}, {width: "40%"}]}>
-                <AddButton text=" Cancel" name="tooltip-remove" navigation={homePage}/>
+                <AddButton text=" Cancel" name="tooltip-remove" f={homePage}/>
             </View>
             <View style = {[{marginHorizontal: "5%"}, {width: "40%"}]}>
-                <AddButton text="Save" name="content-save-check" navigation={addTodo}/>
+                <AddButton text="Save" name="content-save-check" f={addTodo}/>
             </View>
         </View>
-
-        <FlatList
-        data={todos}
-        renderItem={({item}) =><Todo todo={item} cmp={completeTodo} del={deleteTodo}/>}
-        keyExtractor={t=>t.id}
-        />
     </View>
   );
 }

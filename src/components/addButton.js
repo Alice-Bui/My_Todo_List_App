@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons"; 
-export default AddButton = function({text, name, navigation}){
+export default AddButton = function({text, name, f}){
   return (
-    <Pressable style={styles.Button} onPress={navigation}>
+    <Pressable style={styles.Button} onPress={f}>
         <MaterialCommunityIcons name={name} color="white" size ={30} padding={10}/>
         <Text style = {styles.buttonName}>{text}</Text>
     </Pressable>
