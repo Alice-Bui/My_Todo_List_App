@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const key = 'to-do-list';
-const dummyData = {tasks: []};
+const dummyData = {todosData: []};
 export async function loadData () {
     try{
         str = await AsyncStorage.getItem(key)
@@ -18,6 +18,8 @@ export async function saveData (myData) {
     const str = JSON.stringify(myData)
     try {
         await AsyncStorage.setItem(key,str)
+        console.log("myData:")
+        console.log({myData})
     }catch(e){
         console.log('fail to save data', e)
     }

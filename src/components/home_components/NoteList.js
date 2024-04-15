@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
       alignItems: 'center'
     },
     description: {
-      fontSize: 14,
+      fontSize: 12,
       color: 'black',
       fontFamily: 'monospace'
     },

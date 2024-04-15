@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { useEffect, useState } from 'react';
+import { loadData, saveData } from '../datamodel/mydata';
 import Title from '../components/Title';
 import NoteList from '../components/home_components/NoteList';
 import AddButton from '../components/addButton';
@@ -7,6 +8,15 @@ import AddButton from '../components/addButton';
 export default function Home({navigation, route}) {
   const [todosData, displayTodos] = useState([]);
   //Listen for changes to {todos} from AddNewTodo page
+  useEffect(()=> {
+    const firstLoad = async () => {
+      const myData = await loadData()
+      displayTodos(myData.todosData)
+      console.log(todosData)
+    }
+    firstLoad()
+  }, [])
+
   useEffect(() => {
     if (route.params?.todos) {
       displayTodos(route.params.todos);
@@ -15,14 +25,13 @@ export default function Home({navigation, route}) {
     }
   }, [route.params?.todos])
 
-  useEffect(() => {
-    console.log("Home Screen:")
-    console.log(todosData)
-    //navigation.setParams({todos: {todosData}})
+  useEffect(()=>{
+    saveData({todosData})
   }, [todosData])
 
   // Navigate to addNewTodo
   const addNewTodoPage = ()=>navigation.navigate({name: 'Add New Todo', params: {todos: todosData}, merge: true});
+  //const addNewTodoPage = ()=>navigation.navigate('Add New Todo');
 
   return (
     <View style={styles.container}>

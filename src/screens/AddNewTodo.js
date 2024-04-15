@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Pressable, TextInput, FlatList, Button, ToastAndroid } from 'react-native';
 import { useState, useEffect } from 'react';
+import { loadData, saveData } from '../datamodel/mydata';
 import Title from '../components/Title';
 import AddButton from '../components/addButton';
 
@@ -15,8 +16,17 @@ export default function AddNewTodo({navigation, route}) {
   {background: '#F7ECE9',input: '#E8F8F3',button: '#79A092'},
   {background: '#EAE8E8' ,input: '#FCF3DC',button: '#A0916C'}
   ];
-  const [noteTheme, setTheme] = useState('');
+  const [noteTheme, setTheme] = useState(theme[1]);
 
+  useEffect(()=> {
+    const firstLoad = async () => {
+      const myData = await loadData()
+      setTodos(myData.todosData)
+      console.log(todosData)
+    }
+    firstLoad()
+  }, [])
+  
   useEffect(() => {
     if (route.params?.todos) {
       setTodos(route.params.todos);
@@ -26,11 +36,10 @@ export default function AddNewTodo({navigation, route}) {
   }, [route.params?.todos])
 
   useEffect(() => {
+    saveData({todosData})
     console.log("Add New Todo Screen:")
     console.log(todosData)
     setTheme(theme[(todosData.reduce((a,t)=>a<t.id?t.id:a, 0)+1)%4])
-    console.log(noteTheme)
-    //navigation.setParams({todos: {todosData}})
   }, [todosData])
 
   //When clicking the Save button
@@ -99,7 +108,7 @@ const styles = StyleSheet.create({
   },
   main: {
     width: "100%",
-    height: "60%",
+    height: "75%",
     alignItems: 'center',
     justifyContent: 'flex-start', 
   },
