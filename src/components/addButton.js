@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 24,
         padding: 10,
-        fontFamily: 'monospace',
+        fontFamily: 'Poppins_400Regular',
     }
 });

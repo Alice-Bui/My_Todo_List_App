@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View, Pressable, TextInput, FlatList, Button, ToastAndroid } from 'react-native';
+import { StyleSheet, Text, View, Pressable, TextInput, FlatList, Button, ToastAndroid, Alert } from 'react-native';
 import { useState, useEffect } from 'react';
 import { loadData, saveData } from '../datamodel/mydata';
 import Title from '../components/Title';
-import AddButton from '../components/addButton';
+import AddButton from '../components/addButton'
 
 export default function AddNewTodo({navigation, route}) { 
   //Define the data  
@@ -48,7 +48,8 @@ export default function AddNewTodo({navigation, route}) {
     if (title===''||description==='') return
 
     //successful validation
-    ToastAndroid.show('Todo Added Successfully.', ToastAndroid.SHORT)
+    Alert.alert('Todo Added Successfully.')
+    //ToastAndroid.show('Todo Added Successfully.', ToastAndroid.SHORT)
 
     //Creating id
     const maxid = todosData.reduce((a,t)=>a<t.id?t.id:a, 0) 
@@ -66,17 +67,17 @@ export default function AddNewTodo({navigation, route}) {
   
   return (
     <View style={[styles.container, {backgroundColor: noteTheme.background}]}>
-        <Title text="Add New Todo"/>
+        <Title text="add new todo"/>
         <View style = {styles.main}>
             <View style = {styles.listContainer}>
-                <Text style={styles.subtitle}>Title</Text>
+                <Text style={styles.subtitle}>title</Text>
                 <TextInput
-                    style={[styles.input, {height: "10%"}, {backgroundColor: noteTheme.input}]}
+                    style={[styles.input, {backgroundColor: noteTheme.input}]}
                     value={title}
                     onChangeText={setTitle}
                     placeholder="Add a title"
                 />
-                <Text style={styles.subtitle}>Description</Text>
+                <Text style={styles.subtitle}>description</Text>
                 <TextInput
                     multiline
                     numberOfLines={6}
@@ -121,14 +122,13 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderRadius: 10,
       padding: 10,
-      marginBottom: '10%',
-      fontSize: 18,
-      fontFamily: 'monospace',
+      marginBottom: '7%',
+      fontSize: 16,
+      fontFamily: 'Poppins_400Regular',
   },
   subtitle: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      fontFamily: 'monospace',
+      fontSize: 22,
+      fontFamily: 'Poppins_500Medium',
       margin: '2%'
   },
   buttonSection: {

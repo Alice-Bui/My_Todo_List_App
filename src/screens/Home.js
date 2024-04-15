@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { useEffect, useState } from 'react';
 import { loadData, saveData } from '../datamodel/mydata';
+import { useFonts, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 import Title from '../components/Title';
-import NoteList from '../components/home_components/NoteList';
+import NoteList from '../components/NoteList';
 import AddButton from '../components/addButton';
 
 export default function Home({navigation, route}) {

@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, Text, View, Pressable, Button } from 'react-native';
 import { useState, useEffect } from 'react';
 import { MaterialCommunityIcons } from "@expo/vector-icons"; 
-import AddButton from '../addButton';
+import AddButton from './addButton';
 export default NoteList = function({todos, displayTodos}){
   const noteColor = ['#A8C6E0', '#EEF0FF', '#E8F8F3', '#FCF3DC'];
 
@@ -103,8 +103,7 @@ const styles = StyleSheet.create({
     title: {
       fontSize: 18,
       color: 'black',
-      fontWeight: 'bold',
-      fontFamily: 'monospace'
+      fontFamily: 'Poppins_600SemiBold'
     },
     titleSection: {
       flexDirection: 'row', 
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
     description: {
       fontSize: 12,
       color: 'black',
-      fontFamily: 'monospace'
+      fontFamily: 'Poppins_400Regular'
     },
     buttonSection: {
       flexDirection: 'row', 
