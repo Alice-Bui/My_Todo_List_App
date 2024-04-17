@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, TextInput, FlatList, Button, ToastAndroid, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useState, useEffect } from 'react';
 import { loadData, saveData } from '../datamodel/mydata';
 import Title from '../components/Title';
@@ -10,6 +10,7 @@ export default function AddNewTodo({navigation, route}) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
+  //Theme color palette
   const theme = [
   {background: '#FCF0DC',input: '#A8C6E0',button: '#517591'},
   {background: '#FFFBED', input: '#EEF0FF', button: '#656CA2'}, 
@@ -18,31 +19,29 @@ export default function AddNewTodo({navigation, route}) {
   ];
   const [noteTheme, setTheme] = useState(theme[1]);
 
+  //Listen for changes to {todos} from Home page
   useEffect(()=> {
     const firstLoad = async () => {
       const myData = await loadData()
       setTodos(myData.todosData)
-      console.log(todosData)
     }
     firstLoad()
   }, [])
   
+  //Load and save latest data
   useEffect(() => {
     if (route.params?.todos) {
       setTodos(route.params.todos);
-      console.log("Home params:");
-      console.log(route.params.todos);
     }
   }, [route.params?.todos])
 
   useEffect(() => {
     saveData({todosData})
-    console.log("Add New Todo Screen:")
-    console.log(todosData)
+    //Change theme after adding new task
     setTheme(theme[(todosData.reduce((a,t)=>a<t.id?t.id:a, 0)+1)%4])
   }, [todosData])
 
-  //When clicking the Save button
+  //Save button
   const addTodo = () => {
     // If either of the input fields is empty => return nothing
     if (title===''||description==='') return
@@ -66,37 +65,39 @@ export default function AddNewTodo({navigation, route}) {
   const homePage = ()=>navigation.navigate({name: 'Home', params: {todos: todosData}, merge: true});
   
   return (
-    <View style={[styles.container, {backgroundColor: noteTheme.background}]}>
-        <Title text="add new todo"/>
-        <View style = {styles.main}>
-            <View style = {styles.listContainer}>
-                <Text style={styles.subtitle}>title</Text>
-                <TextInput
-                    style={[styles.input, {backgroundColor: noteTheme.input}]}
-                    value={title}
-                    onChangeText={setTitle}
-                    placeholder="Add a title"
-                />
-                <Text style={styles.subtitle}>description</Text>
-                <TextInput
-                    multiline
-                    numberOfLines={6}
-                    style={[styles.input, {textAlignVertical: "top"}, {backgroundColor: noteTheme.input}]}
-                    value={description}
-                    onChangeText={setDescription}
-                    placeholder="Add some details"
-                />
-            </View>
-        </View>
-        <View style={styles.buttonSection}>
-            <View style = {styles.button}>
-                <AddButton text="Back" name="tooltip-remove" f={homePage} color={noteTheme.button}/>
-            </View>
-            <View style = {styles.button}>
-                <AddButton text="Save" name="content-save-check" f={addTodo} color={noteTheme.button}/>
-            </View>
-        </View>
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={[styles.container, {backgroundColor: noteTheme.background}]}>
+          <Title text="add new todo"/>
+          <View style = {styles.main}>
+              <View style = {styles.listContainer}>
+                  <Text style={styles.subtitle}>title</Text>
+                    <TextInput
+                        style={[styles.input, {backgroundColor: noteTheme.input}]}
+                        value={title}
+                        onChangeText={setTitle}
+                        placeholder="Add a title"
+                    />
+                  <Text style={styles.subtitle}>description</Text>
+                  <TextInput
+                      multiline
+                      numberOfLines={6} //only works on Android
+                      style={[styles.input, {textAlignVertical:'top'}, {backgroundColor: noteTheme.input}, {height: "30%"}]}
+                      value={description}
+                      onChangeText={setDescription}
+                      placeholder="Add some details"
+                  />
+              </View>
+          </View>
+          <View style={styles.buttonSection}>
+              <View style = {styles.button}>
+                  <AddButton text="Back" name="tooltip-remove" f={homePage} color={noteTheme.button}/>
+              </View>
+              <View style = {styles.button}>
+                  <AddButton text="Save" name="content-save-check" f={addTodo} color={noteTheme.button}/>
+              </View>
+          </View>
+      </View>
+    </TouchableWithoutFeedback> 
   );
 }
 
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
   },
   main: {
     width: "100%",
-    height: "75%",
+    height: "60%",
     alignItems: 'center',
     justifyContent: 'flex-start', 
   },

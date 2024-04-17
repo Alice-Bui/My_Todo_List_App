@@ -1,9 +1,7 @@
-import { FlatList, StyleSheet, Text, View, Pressable, Button } from 'react-native';
-import { useState, useEffect } from 'react';
+import { FlatList, StyleSheet, Text, View, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons"; 
-import AddButton from './addButton';
 export default NoteList = function({todos, displayTodos}){
-  const noteColor = ['#A8C6E0', '#EEF0FF', '#E8F8F3', '#FCF3DC'];
+  const noteColor = ['#A4C2DB', '#EEF0FF', '#E8F8F3', '#FCF3DC'];
 
   //Displaying each Todo task
   const Todo = ({todo,cmp,del,dis}) => {
@@ -13,16 +11,22 @@ export default NoteList = function({todos, displayTodos}){
         <View style={[styles.list, {backgroundColor: noteColor[id%4]}]}>
           <View style={styles.titleSection}>
             <Text style = {styles.title}>{title}</Text>
+            
+            {/*Toggle Display Mode through Caret Icon => show description*/}
             <Pressable onPress={()=>dis(id)}>
             <MaterialCommunityIcons name={showIcon} color="black" size ={30}/>
             </Pressable>
           </View>
+
+          {/*Expanded Mode Display*/}
           {showDescription==true && (<View>
             <Text style = {styles.description}>{description}</Text>
             <View style={styles.buttonSection}>
+              {/*Finish function*/}
               {!completed &&<Pressable onPress={()=>cmp(id)}>
-                  <MaterialCommunityIcons name='star-check' color="#F0D160" size ={35}/>
+                  <MaterialCommunityIcons name='cloud-check' color="#41A868" size ={35}/>
               </Pressable>}
+              {/*Delete function*/}
               <Pressable onPress={()=>del(id)}>
                 <MaterialCommunityIcons name='delete-forever' color="#CF5751" size ={35}/>
               </Pressable>
@@ -111,6 +115,7 @@ const styles = StyleSheet.create({
       alignItems: 'center'
     },
     description: {
+      paddingVertical: 5,
       fontSize: 12,
       color: 'black',
       fontFamily: 'Poppins_400Regular'

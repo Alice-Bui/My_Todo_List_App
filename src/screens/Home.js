@@ -1,23 +1,15 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { useEffect, useState } from 'react';
 import { loadData, saveData } from '../datamodel/mydata';
-import { useFonts, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 import Title from '../components/Title';
 import NoteList from '../components/NoteList';
 import AddButton from '../components/addButton';
 
 export default function Home({navigation, route}) {
+  //Define data
   const [todosData, displayTodos] = useState([]);
+  
   //Listen for changes to {todos} from AddNewTodo page
-  useEffect(()=> {
-    const firstLoad = async () => {
-      const myData = await loadData()
-      displayTodos(myData.todosData)
-      console.log(todosData)
-    }
-    firstLoad()
-  }, [])
-
   useEffect(() => {
     if (route.params?.todos) {
       displayTodos(route.params.todos);
@@ -26,13 +18,22 @@ export default function Home({navigation, route}) {
     }
   }, [route.params?.todos])
 
+  //Load and save latest data
+  useEffect(()=> {
+    const firstLoad = async () => {
+      const myData = await loadData()
+      displayTodos(myData.todosData)
+      console.log(todosData)
+    }
+    firstLoad()
+  }, [])
+  
   useEffect(()=>{
     saveData({todosData})
   }, [todosData])
 
-  // Navigate to addNewTodo
+  // Navigate to addNewTodo and pass todosData
   const addNewTodoPage = ()=>navigation.navigate({name: 'Add New Todo', params: {todos: todosData}, merge: true});
-  //const addNewTodoPage = ()=>navigation.navigate('Add New Todo');
 
   return (
     <View style={styles.container}>
