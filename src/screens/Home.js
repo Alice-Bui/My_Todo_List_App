@@ -13,8 +13,6 @@ export default function Home({navigation, route}) {
   useEffect(() => {
     if (route.params?.todos) {
       displayTodos(route.params.todos);
-      console.log("Home params:");
-      console.log(route.params.todos);
     }
   }, [route.params?.todos])
 
@@ -23,7 +21,6 @@ export default function Home({navigation, route}) {
     const firstLoad = async () => {
       const myData = await loadData()
       displayTodos(myData.todosData)
-      console.log(todosData)
     }
     firstLoad()
   }, [])

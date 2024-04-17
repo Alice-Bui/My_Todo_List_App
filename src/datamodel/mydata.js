@@ -18,8 +18,6 @@ export async function saveData (myData) {
     const str = JSON.stringify(myData)
     try {
         await AsyncStorage.setItem(key,str)
-        console.log("myData:")
-        console.log({myData})
     }catch(e){
         console.log('fail to save data', e)
     }
